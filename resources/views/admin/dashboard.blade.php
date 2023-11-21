@@ -1,4 +1,8 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumbs="[
+    [
+        'name' => 'Home'
+    ],
+]">
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
         <div class="col">

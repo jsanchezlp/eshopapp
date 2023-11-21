@@ -83,6 +83,8 @@
 
 </html> --}}
 
+@props(['breadcrumbs' => []])
+
 <!DOCTYPE html>
 <html lang="en" class="minimal-theme">
 
@@ -134,6 +136,8 @@
 
         <!--start content-->
         <main class="page-content">
+
+          @include('layouts.partials.admin.breadcrumb')
 
             {{ $slot }}
 

@@ -5,7 +5,7 @@
             'icon' => 'bi bi-house-door',
             'sublink1' => [
                 'name' => 'Inicio',
-                'route' => 'admin',
+                'route' => route('admin.dashboard'),
                 'active' => request()->routeIs('admin.dashboard'),
             ],
             'sublink2' => [
@@ -17,11 +17,16 @@
         'Aplicación' => [
             'icon' => 'bi bi-grid',
             'sublink1' => [
+                'name' => 'Familias',
+                'route' => route('admin.families.index'),
+                'active' => request()->routeIs('admin.families.*'),
+            ],
+            'sublink2' => [
                 'name' => 'Productos',
                 'route' => 'admin.products',
                 'active' => request()->routeIs('admin.products'),
             ],
-            'sublink2' => [
+            'sublink3' => [
                 'name' => 'Categorías',
                 'route' => 'admin.categories',
                 'active' => request()->routeIs('admin.categories'),
