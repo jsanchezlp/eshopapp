@@ -21,29 +21,35 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Storage::deleteDirectory('categories');
-        Storage::deleteDirectory('subcategories');
+        // Storage::deleteDirectory('categories');
+        // Storage::deleteDirectory('subcategories');
         
-        Storage::deleteDirectory('images');
+        //Storage::deleteDirectory('images');
         // Storage::deleteDirectory('products');
 
-        Storage::makeDirectory('categories');
-        Storage::makeDirectory('subcategories'); // no ejecutar
+        // Storage::makeDirectory('categories');
+        // Storage::makeDirectory('subcategories');
+        // Storage::makeDirectory('products');
 
-        Storage::makeDirectory('products');
-
-        $this->call(CategorySeeder::class);
+        // $this->call(CategorySeeder::class);
         // $this->call(EntityTypeSeeder::class); // no ejecutar
         
         // $this->call(ImageSeeder::class);
-        $this->call(SubcategorySeeder::class);
+        // $this->call(SubcategorySeeder::class);
 
-        $this->call(ProductSeeder::class);
+        // $this->call(ProductSeeder::class);
 
-        $this->call(ColorSeeder::class);
+        // $this->call(ColorSeeder::class);
 
-        $this->call(ProductColorSeeder::class);
+        // $this->call(ProductColorSeeder::class);
 
-        $this->call(SizeSeeder::class);
+        // $this->call(SizeSeeder::class);
+
+
+        // SEEDERS ADICIONALES 
+
+        $this->call(FamilySeeder::class);
+
+
     }
 }

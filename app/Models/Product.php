@@ -27,6 +27,15 @@ class Product extends Model
         return $this->belongsTo(Subcategory::class, 'Prod_SubcatID', 'Subcat_ID');
     }
 
+    public function variants(){
+        return $this->hasMany(Variant::class, 'Variant_ProdID', 'Prod_ID');
+    }
+
+    public function options(){
+        return $this->belongsToMany(Option::class, 'options_products', 'Opt_Prod_ProdID', 'Opt_Prod_OptionID', 'Prod_ID', 'Option_ID')
+                    ->withPivot('Opt_Prod_Value');
+    }
+
     public function colors(){
         return $this->belongsToMany(Color::class, 'products_has_colors', 'Products_Prod_ID', 'Colors_Color_ID', 'Prod_ID', 'Color_ID');
     }

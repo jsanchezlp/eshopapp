@@ -19,13 +19,17 @@ class Category extends Model
 
     protected $fillable = [
         'Cate_Name',
-        'Cate_Slug'
+        'Cate_Slug',
+        'Cate_Family_ID',
     ];
 
     // public function getRouteKeyName(){
     //     return 'Cate_ID';
     // }
 
+    Public function family(){
+        return $this->belongsTo(Family::class, 'Cate_FamilyID', 'Family_ID');
+    }
 
     //Relación uno a muchos con subcategorías
     public function subcategories(){
