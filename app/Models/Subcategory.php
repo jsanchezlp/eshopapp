@@ -18,16 +18,17 @@ class Subcategory extends Model
 
      protected $table = 'Subcategories';
 
+     protected $primaryKey = 'Subcat_ID';
 
-    //  protected $fillable = [
-    //      'Subcat_Name',
-    //      'Subcat_Slug'
-    //  ];
+     protected $fillable = [
+         'Subcat_Name',
+         'Subcat_CatID'
+     ];
 
     // la propiedad $guarded define los campos que queremos deshabilitar por asigación masiva
-    protected $guarded = [
-        'Subcat_ID',
-    ];
+    // protected $guarded = [
+    //     'Subcat_ID',
+    // ];
 
 
     Public function category(){

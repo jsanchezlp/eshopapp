@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\Category;
+use App\Models\CategoryImages;
 use App\Models\Family;
 use App\Models\Subcategory;
+use App\Models\SubcategoryImages;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -114,18 +117,40 @@ class FamilySeeder extends Seeder
 
             foreach ($categories as $category => $subcategories) {
                 
+                $brands = Brand::factory(2)->create();
+
+
                 $category = Category::create([
                     'Cate_Name' => $category,
                     'Cate_Slug' => Str::slug($category),
-                    'Cate_Family_ID' => $family->id,
+                    'Cate_Family_ID' => $family->Family_ID,
                 ]);
 
+                CategoryImages::factory()->create([
+                    'Img_EntityID' => $category->Cate_ID,
+                    'Img_EntityTypeID' => 2,
+                ]);
+
+
+                foreach ($brands as $brand) {
+                    $brand->categories()->attach($category->Cate_ID);
+                    // dd($brand->category);
+                }
+
+
                 foreach ($subcategories as $subcategory) {
-                    Subcategory::create([
+
+                    $newSubcategory = Subcategory::create([
                         'Subcat_Name' => $subcategory,
                         'Subcat_Slug' => Str::slug($subcategory),
-                        'Subcat_CatID' => $category->id,
+                        'Subcat_CatID' => $category->Cate_ID,
                     ]);
+
+                    SubcategoryImages::factory()->create([
+                        'Img_EntityID' => $newSubcategory->Subcat_ID,
+                        'Img_EntityTypeID' => 3,
+                    ]);        
+
                 }
 
             }

@@ -22,14 +22,19 @@
                 'active' => request()->routeIs('admin.families.*'),
             ],
             'sublink2' => [
-                'name' => 'Productos',
-                'route' => 'admin.products',
-                'active' => request()->routeIs('admin.products'),
+                'name' => 'Categorías',
+                'route' => route('admin.categories.index'),
+                'active' => request()->routeIs('admin.categories.*'),
             ],
             'sublink3' => [
-                'name' => 'Categorías',
-                'route' => 'admin.categories',
-                'active' => request()->routeIs('admin.categories'),
+                'name' => 'Subategorías',
+                'route' => route('admin.subcategories.index'),
+                'active' => request()->routeIs('admin.subcategories.*'),
+            ],
+            'sublink4' => [
+                'name' => 'Productos',
+                'route' => route('admin.products.index'),
+                'active' => request()->routeIs('admin.products'),
             ],
         ],
 

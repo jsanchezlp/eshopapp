@@ -7,7 +7,6 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a>
                     </li>
-
                     @foreach ($breadcrumbs as $item)
                         <li class="breadcrumb-item active" aria-current="page">
                             @isset($item['route'])
@@ -17,7 +16,6 @@
                             @endisset
                         </li>
                     @endforeach
-
                 </ol>
             </nav>
         </div>

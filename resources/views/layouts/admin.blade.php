@@ -86,21 +86,23 @@
 @props(['breadcrumbs' => []])
 
 <!DOCTYPE html>
-<html lang="en" class="minimal-theme">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="minimal-theme">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
+
+     <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!--plugins-->
     <link href="{{ asset('assets/admin/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}"
-        rel="stylesheet" />
+    <link href="{{ asset('assets/admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/admin/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}"
-        rel="stylesheet" />
+    <link href="{{ asset('assets/admin/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link href="{{ asset('assets/admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet" />
@@ -159,6 +161,8 @@
     </div>
     <!--end wrapper-->
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Bootstrap bundle JS -->
     <script src="{{ asset('assets/admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
@@ -183,6 +187,21 @@
         new PerfectScrollbar(".top-sellers-list");
     </script>
 
+    @livewireScripts
+
+    @stack('js')
+
+    @if (session('swal'))
+      <script>
+            Swal.fire({!! json_encode(session('swal')) !!});
+      </script>
+    @endif
+
+    <script>
+      Livewire.on('swal', data => {
+        Swal.fire(data[0]);
+      });
+    </script>
 
 </body>
 

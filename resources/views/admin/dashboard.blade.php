@@ -956,4 +956,8 @@
         </div>
     </div>
 
+@push('js')
+
+@endpush
+
 </x-admin-layout>

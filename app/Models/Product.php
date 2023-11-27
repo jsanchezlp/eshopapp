@@ -9,7 +9,12 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = 'products';
 
+    protected $primaryKey = 'Prod_ID';
+
+
+    
     protected $guarded = [
         'Prod_ID',
     ];

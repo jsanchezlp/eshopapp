@@ -11,6 +11,7 @@ class Family extends Model
 
     protected $table = 'families';
 
+    protected $primaryKey = 'Family_ID';
 
     protected $fillable = [
         'Family_Name',
@@ -19,7 +20,7 @@ class Family extends Model
     
     //Relación uno a muchos con categorías
     public function categories() {
-        return $this->hasMany(Category::class, 'Cate_FamilyID', 'Family_ID');
+        return $this->hasMany(Category::class, 'Cate_Family_ID', 'Family_ID');
     }
 
 

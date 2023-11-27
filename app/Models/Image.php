@@ -15,7 +15,7 @@ class Image extends Model
     protected $fillable = [
         'Img_EntityID',
         'Img_EntityTypeID',
-        // 'Img_Path'
+        'Img_Path'
     ];
 
     public function product(){

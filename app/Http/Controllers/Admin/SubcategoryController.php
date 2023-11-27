@@ -3,21 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Family;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
-class FamilyController extends Controller
+class SubcategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $categories = Category::all();
 
-        $families = Family::orderBy('Family_ID', 'DESC')
-                            ->paginate(10);
-
-        return view('admin.families.index', compact('families'));
+        $subcategories = Subcategory::with('category.family')
+                                    ->orderBy('Subcat_ID', 'DESC')
+                                    ->paginate(10);
+        
+        return view('admin.subcategories.index', compact('subcategories', 'categories'));
     }
 
     /**
@@ -34,26 +37,28 @@ class FamilyController extends Controller
     public function store(Request $request)
     {
 
+        return $request->all();
+
         $request->validate([
-            'Family_Name' => 'required'
+            'Subcat_Name' => 'required',
+            'Subcat_CatID' => 'required|exists:categories,Category_ID',
         ]);
 
-        Family::create($request->all());
+        Subcategory::create($request->all());
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Hecho!',
-            'text' => 'Familia creada correctamente.',
+            'text' => 'Subcategoría creada correctamente.',
         ]);
 
         return redirect()->back();
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Family $family)
+    public function show(Subcategory $subcategory)
     {
         //
     }
@@ -61,51 +66,38 @@ class FamilyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( Family $family )
+    public function edit(Subcategory $subcategory)
     {
 
-        return view('admin.families.edit', compact('family'));
+        return view('admin.subcategories.edit', compact('subcategory'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Family $family)
+    public function update(Request $request, Subcategory $subcategory)
     {
-        $request->validate([
-            'Family_Name' => 'required'
-        ]);
-
-        $family->update($request->all());
-
-        session()->flash('swal', [
-            'icon' => 'success',
-            'title' => '¡Hecho!',
-            'text' => 'Familia actualizada correctamente.',
-        ]);
-
-        return redirect()->back();
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Family $family)
+    public function destroy(Subcategory $subcategory)
     {
-
-        if ( $family->categories->count() > 0 ) {
+        if ( $subcategory->products->count() > 0 ) {
 
             session()->flash('swal', [
                 'icon' => 'error',
                 'title' => '¡Ups!',
-                'text' => 'No se puede eliminar la familia porque tiene categorías asociadas.'
+                'text' => 'No se puede eliminar la categoría porque tiene productos asociadas.'
             ]);
 
             return redirect()->back();
         }
 
-        $family->delete();
+        $subcategory->delete();
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -114,6 +106,5 @@ class FamilyController extends Controller
         ]);
 
         return redirect()->back();
-
     }
 }

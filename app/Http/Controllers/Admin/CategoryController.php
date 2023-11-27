@@ -3,21 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Family;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class FamilyController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $families = Family::all();
 
-        $families = Family::orderBy('Family_ID', 'DESC')
-                            ->paginate(10);
+        // DB::enableQueryLog();
 
-        return view('admin.families.index', compact('families'));
+        $categories = Category::orderBy('Cate_ID', 'DESC')
+                              ->with('family')
+                              ->paginate(10);
+        
+        // dd(DB::getQueryLog());
+
+        return view('admin.categories.index', compact('categories', 'families'));
     }
 
     /**
@@ -33,17 +41,17 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'Family_Name' => 'required'
+            'Cate_Name' => 'required',
+            'Cate_Family_ID' => 'required|exists:families,Family_ID',
         ]);
 
-        Family::create($request->all());
+        Category::create($request->all());
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Hecho!',
-            'text' => 'Familia creada correctamente.',
+            'text' => 'Categoría creada correctamente.',
         ]);
 
         return redirect()->back();
@@ -53,7 +61,7 @@ class FamilyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Family $family)
+    public function show(Category $category)
     {
         //
     }
@@ -61,51 +69,52 @@ class FamilyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( Family $family )
+    public function edit(Category $category)
     {
+        $families = Family::all();
 
-        return view('admin.families.edit', compact('family'));
+        return view('admin.categories.edit', compact('category', 'families'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Family $family)
+    public function update(Request $request, Category $category)
     {
+        
         $request->validate([
-            'Family_Name' => 'required'
+            'Cate_Name' => 'required',
+            'Cate_Family_ID' => 'required|exists:families,Family_ID',
         ]);
 
-        $family->update($request->all());
+        $category->update($request->all());
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Hecho!',
-            'text' => 'Familia actualizada correctamente.',
+            'text' => 'Categoría actualizada correctamente.',
         ]);
 
         return redirect()->back();
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Family $family)
+    public function destroy(Category $category)
     {
-
-        if ( $family->categories->count() > 0 ) {
+        if ( $category->subcategories->count() > 0 ) {
 
             session()->flash('swal', [
                 'icon' => 'error',
                 'title' => '¡Ups!',
-                'text' => 'No se puede eliminar la familia porque tiene categorías asociadas.'
+                'text' => 'No se puede eliminar la categoría porque tiene subcategorías asociadas.'
             ]);
 
             return redirect()->back();
         }
 
-        $family->delete();
+        $category->delete();
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -114,6 +123,5 @@ class FamilyController extends Controller
         ]);
 
         return redirect()->back();
-
     }
 }

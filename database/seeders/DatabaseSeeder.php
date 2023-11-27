@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,15 +23,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Storage::deleteDirectory('categories');
-        // Storage::deleteDirectory('subcategories');
+        Storage::deleteDirectory('categories');
+        Storage::deleteDirectory('subcategories');
         
         //Storage::deleteDirectory('images');
-        // Storage::deleteDirectory('products');
+        Storage::deleteDirectory('products');
 
-        // Storage::makeDirectory('categories');
-        // Storage::makeDirectory('subcategories');
-        // Storage::makeDirectory('products');
+        Storage::makeDirectory('categories');
+        Storage::makeDirectory('subcategories');
+        Storage::makeDirectory('products');
 
         // $this->call(CategorySeeder::class);
         // $this->call(EntityTypeSeeder::class); // no ejecutar
@@ -50,6 +52,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FamilySeeder::class);
 
+        // Product::factory(150)->create();
+
+        Product::factory(150)->create()->each(function(Product $product){
+            Image::factory(4)->create([
+                'Img_EntityID' => $product->Prod_ID,
+                'Img_EntityTypeID' => 1
+            ]);
+        });
 
     }
 }

@@ -16,6 +16,7 @@ class Category extends Model
      */
     protected $table = 'categories';
 
+    protected $primaryKey = 'Cate_ID';
 
     protected $fillable = [
         'Cate_Name',
@@ -28,7 +29,7 @@ class Category extends Model
     // }
 
     Public function family(){
-        return $this->belongsTo(Family::class, 'Cate_FamilyID', 'Family_ID');
+        return $this->belongsTo(Family::class, 'Cate_Family_ID', 'Family_ID');
     }
 
     //Relación uno a muchos con subcategorías

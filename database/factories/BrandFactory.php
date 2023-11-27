@@ -18,7 +18,7 @@ class BrandFactory extends Factory
     {
         return [
             
-            'Brand_Name' => $this->faker->word()
+            'Brand_Name' => $this->faker->unique()->word()
             
         ];
     }

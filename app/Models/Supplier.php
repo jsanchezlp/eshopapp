@@ -11,6 +11,9 @@ class Supplier extends Model
 
     protected $table = 'suppliers';
 
+    protected $primaryKey = 'Supp_ID';
+    
+
     //Relación con productos
     public function products(){
         return $this->hasMany(Product::class, 'Supp_ID', 'Prod_SuppID');
